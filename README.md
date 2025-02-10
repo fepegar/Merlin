@@ -1,82 +1,55 @@
 # Merlin: Vision Language Foundation Model for 3D Computed Tomography
 
-*Merlin is a 3D VLM for computed tomography that leverages both structured electronic health records (EHR) and unstructured radiology reports for pretraining.*
+[![arXiv](https://img.shields.io/badge/arXiv-2406.06512-b31b1b.svg?style=for-the-badge)](https://arxiv.org/abs/2406.06512)&nbsp;&nbsp;&nbsp;&nbsp;[![Hugging Face](https://huggingface.co/datasets/huggingface/badges/resolve/main/model-on-hf-md.svg)](https://huggingface.co/stanfordmimi/Merlin)&nbsp;&nbsp;&nbsp;&nbsp;[![pypi](https://img.shields.io/pypi/v/merlin-vlm?style=for-the-badge)](https://pypi.org/project/merlin-vlm/)&nbsp;&nbsp;&nbsp;&nbsp;![License](https://img.shields.io/github/license/stanfordmimi/merlin?style=for-the-badge)
 
-[[📄 Paper](https://arxiv.org/abs/2406.06512)] [[🤗 Hugging Face](https://huggingface.co/louisblankemeier/Merlin)]
+*Merlin is a 3D VLM for computed tomography that leverages both structured electronic health records (EHR) and unstructured radiology reports for pretraining.*
 
 ![Key Graphic](documentation/assets/overview.png)
 
-## Installation
+## ⚡️ Installation
 
-Clone the repository:
+To install Merlin, you can simply run:
+
+```python
+pip install merlin-vlm
+```
+
+For an editable installation, use the following commands to clone and install this repository.
 ```bash
-git clone https://github.com/StanfordMIMI/Merlin
+git clone https://github.com/StanfordMIMI/Merlin.git
 cd merlin
-```
-
-Create a new Conda environment:
-```bash
-conda create --name merlin_env python=3.9
-```
-
-Activate the Conda environment:
-```bash
-conda activate merlin_env
-```
-
-Install dependencies:
-```bash
 pip install -e .
 ```
 
-## Inference on a demo CT scan
+## 🚀 Inference with Merlin
 
+To create a Merlin model with both image and text embeddings enabled, use the following:
 ```python
-import os
-import warnings
-import torch
-import merlin
+from merlin import Merlin
 
-warnings.filterwarnings("ignore")
-device = "cuda" if torch.cuda.is_available() else "cpu"
-
-model = merlin.models.Merlin()
-model.eval()
-model.cuda()
-
-data_dir = os.path.join(os.path.dirname(merlin.__file__), "abct_data")
-cache_dir = data_dir.replace("abct_data", "abct_data_cache")
-
-datalist = [
-    {
-        "image": merlin.data.download_sample_data(data_dir), # function returns local path to nifti file
-        "text": "Lower thorax: A small low-attenuating fluid structure is noted in the right cardiophrenic angle in keeping with a tiny pericardial cyst."
-        "Liver and biliary tree: Normal. Gallbladder: Normal. Spleen: Normal. Pancreas: Normal. Adrenal glands: Normal. "
-        "Kidneys and ureters: Symmetric enhancement and excretion of the bilateral kidneys, with no striated nephrogram to suggest pyelonephritis. "
-        "Urothelial enhancement bilaterally, consistent with urinary tract infection. No renal/ureteral calculi. No hydronephrosis. "
-        "Gastrointestinal tract: Normal. Normal gas-filled appendix. Peritoneal cavity: No free fluid. "
-        "Bladder: Marked urothelial enhancement consistent with cystitis. Uterus and ovaries: Normal. "
-        "Vasculature: Patent. Lymph nodes: Normal. Abdominal wall: Normal. "
-        "Musculoskeletal: Degenerative change of the spine.",
-    },
-]
-
-dataloader = merlin.data.DataLoader(
-    datalist=datalist,
-    cache_dir=cache_dir,
-    batchsize=8,
-    shuffle=True,
-    num_workers=0,
-)
-
-for batch in dataloader:
-    outputs = model(
-        batch["image"].to(device), 
-        batch["text"]
-        )
-    print(f"\n================== Output Shapes ==================")
-    print(f"Contrastive image embeddings shape: {outputs[0].shape}")
-    print(f"Phenotype predictions shape: {outputs[1].shape}")
-    print(f"Contrastive text embeddings shape: {outputs[2].shape}")
+model = Merlin()
 ```
 
+To initialize the model with **only image embeddings** active, use:
+```python
+from merlin import Merlin
+
+model = Merlin(ImageEmbedding=True)
+```
+
+#### For inference on a demo CT scan, please check out [documentation/demo.py](documentation/demo.py)
+
+#### For additional documentation, please read the [documentation](documentation/inference.md).
+
+## 📎 Citation
+If you find this repository useful for your work, please cite the cite the [original paper](https://arxiv.org/abs/2406.06512):
+
+```bibtex
+@article{blankemeier2024merlin,
+  title={Merlin: A vision language foundation model for 3d computed tomography},
+  author={Blankemeier, Louis and Cohen, Joseph Paul and Kumar, Ashwin and Van Veen, Dave and Gardezi, Syed Jamal Safdar and Paschali, Magdalini and Chen, Zhihong and Delbrouck, Jean-Benoit and Reis, Eduardo and Truyts, Cesar and others},
+  journal={Research Square},
+  pages={rs--3},
+  year={2024}
+}
+```

@@ -9,8 +9,9 @@ from merlin.utils import download_file
 
 
 class Merlin(nn.Module):
-    def __init__(self):
+    def __init__(self, ImageEmbedding: bool = False):
         super(Merlin, self).__init__()
+        self.ImageEmbedding = ImageEmbedding
         self.current_path = os.path.dirname(os.path.abspath(__file__))
         self.local_dir = os.path.join(self.current_path, "checkpoints")
         self.checkpoint_name = (
@@ -24,7 +25,7 @@ class Merlin(nn.Module):
     '''
     def _load_model(self):
         self._download_checkpoint()
-        model = MerlinArchitecture()
+        model = MerlinArchitecture(ImageEmbedding=self.ImageEmbedding)
         model.load_state_dict(
             torch.load(os.path.join(self.local_dir, self.checkpoint_name))
         )

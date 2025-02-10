@@ -1,10 +1,14 @@
+'''
+Download Merlin and test the model on sample data that is downloaded from huggingface
+'''
 import os
 import warnings
 import torch
 
-from merlin import Merlin
 from merlin.data import download_sample_data
 from merlin.data import DataLoader
+from merlin import Merlin
+
 
 warnings.filterwarnings("ignore")
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -47,3 +51,16 @@ for batch in dataloader:
     print(f"Contrastive image embeddings shape: {outputs[0].shape}")
     print(f"Phenotype predictions shape: {outputs[1].shape}")
     print(f"Contrastive text embeddings shape: {outputs[2].shape}")
+    
+## Get the Image Embeddings
+model = Merlin(ImageEmbedding=True)
+model.eval()
+model.cuda()
+
+for batch in dataloader:
+    outputs = model(
+        batch["image"].to(device), 
+        )
+    print(f"\n================== Output Shapes ==================")
+    print(f"Image embeddings shape (Can be used for downstream tasks): {outputs[0].shape}")
+    

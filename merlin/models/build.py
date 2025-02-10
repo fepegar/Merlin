@@ -10,16 +10,21 @@ from merlin.models import i3res
 
 
 class ImageEncoder(nn.Module):
-    def __init__(self):
+    def __init__(self, ImageEmbedding: bool = False):
         super().__init__()
+        self.ImageEmbedding = ImageEmbedding
         resnet = torchvision.models.resnet152(pretrained=True)
         self.i3_resnet = i3res.I3ResNet(
-            copy.deepcopy(resnet), class_nb=1692, conv_class=True
+            copy.deepcopy(resnet), class_nb=1692, conv_class=True, ImageEmbedding=self.ImageEmbedding
         )
 
     def forward(self, image):
-        contrastive_features, ehr_features = self.i3_resnet(image)
-        return contrastive_features, ehr_features
+        if self.ImageEmbedding:
+            contrastive_features = self.i3_resnet(image)
+            return contrastive_features
+        else:
+            contrastive_features, ehr_features = self.i3_resnet(image)
+            return contrastive_features, ehr_features
 
 
 class TextEncoder(nn.Module):
@@ -46,13 +51,22 @@ class TextEncoder(nn.Module):
 
 
 class MerlinArchitecture(nn.Module):
-    def __init__(self, init_logit_scale: float = 1.0):
+    def __init__(self, init_logit_scale: float = 1.0, ImageEmbedding: bool = False): 
         super().__init__()
-        self.encode_image = ImageEncoder()
+        self.ImageEmbedding = ImageEmbedding
+        self.encode_image = ImageEncoder(ImageEmbedding=self.ImageEmbedding)
         self.encode_text = TextEncoder()
         self.logit_scale = nn.Parameter(torch.ones([]) * init_logit_scale)
 
-    def forward(self, image, text):
+    def forward(self, image, text=None):
+        if self.ImageEmbedding and text is None:
+            image_features = self.encode_image(image)
+            return image_features
+        elif self.ImageEmbedding and text is not None:
+            raise ValueError("Text input not required for image embedding")
+        elif text is None:
+            raise ValueError("Text input required for Image and Text embedding")
+        
         image_features, ehr_features = self.encode_image(image)
         text_features = self.encode_text(text)
 
