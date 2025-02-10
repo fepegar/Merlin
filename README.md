@@ -37,7 +37,7 @@ from merlin import Merlin
 model = Merlin(ImageEmbedding=True)
 ```
 
-#### For inference on a demo CT scan, please check out [documentation/demo.py](documentation/demo.py)
+#### For inference on a demo CT scan, please check out the [demo](documentation/demo.py)
 
 #### For additional documentation, please read the [documentation](documentation/inference.md).
 
