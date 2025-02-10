@@ -39,7 +39,7 @@ model = Merlin(ImageEmbedding=True)
 
 #### For inference on a demo CT scan, please check out the [demo](documentation/demo.py)
 
-#### For additional documentation, please read the [documentation](documentation/inference.md).
+#### For additional information, please read the [documentation](documentation/inference.md).
 
 ## 📎 Citation
 If you find this repository useful for your work, please cite the cite the [original paper](https://arxiv.org/abs/2406.06512):
