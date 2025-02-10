@@ -4,6 +4,8 @@ Merlin can be run by instantiating the model in PyTorch. Merlin weights are also
 - Image/Text contrastive embeddings
 - Image-only embeddings (provide similar functionality to Google CT Foundation)
 
+For a better understanding of the phenotypes and their associated PheWAS attributes, please refer to the [phenotypes](phenotypes.csv) file.
+
 **Please see the [demo](demo.py) for programmatic examples.**
 
 #### Image/Text contrastive embeddings
