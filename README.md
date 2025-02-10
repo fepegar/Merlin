@@ -4,7 +4,7 @@
 
 [[📄 Paper](https://arxiv.org/abs/2406.06512)] [[🤗 Hugging Face](https://huggingface.co/louisblankemeier/Merlin)]
 
-![Key Graphic](figures/overview.png)
+![Key Graphic](documentation/assets/overview.png)
 
 ## Installation
 
