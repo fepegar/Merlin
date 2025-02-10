@@ -1,9 +1,9 @@
-import merlin
+from merlin.utils import download_file
 
 
 def download_sample_data(data_dir):
-    file_path = merlin.utils.download_file(
-        repo_id="louisblankemeier/Merlin",
+    file_path = download_file(
+        repo_id="stanfordmimi/Merlin",
         filename="image1.nii.gz",
         local_dir=data_dir,
     )

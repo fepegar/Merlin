@@ -10,7 +10,7 @@
 
 Clone the repository:
 ```bash
-git clone https://github.com/louisblankemeier/merlin
+git clone https://github.com/StanfordMIMI/Merlin
 cd merlin
 ```
 

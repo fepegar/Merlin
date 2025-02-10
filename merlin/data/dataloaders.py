@@ -8,8 +8,7 @@ from typing import List
 from monai.utils import look_up_option
 from monai.data.utils import SUPPORTED_PICKLE_MOD
 
-import merlin
-
+from merlin.data.monai_transforms import ImageTransforms
 
 class CTPersistentDataset(monai.data.PersistentDataset):
     def __init__(self, data, transform, cache_dir=None):
@@ -29,7 +28,6 @@ class CTPersistentDataset(monai.data.PersistentDataset):
             data_item_md5 = self.hash_func(image_data).decode(
                 "utf-8"
             )  # Hash based on image data
-            # data_item_md5 += self.transform_hash
             hashfile = self.cache_dir / f"{data_item_md5}.pt"
 
         if hashfile is not None and hashfile.is_file():
@@ -85,7 +83,7 @@ class DataLoader(monai.data.DataLoader):
         self.batchsize = batchsize
         self.dataset = CTPersistentDataset(
             data=datalist,
-            transform=merlin.data.ImageTransforms,
+            transform=ImageTransforms,
             cache_dir=cache_dir,
         )
         super().__init__(
