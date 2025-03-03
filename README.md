@@ -8,7 +8,7 @@
 
 ## ⚡️ Installation
 
-To install Merlin, you can simply run:
+To install Merlin (Python 3.9 required), you can simply run:
 
 ```python
 pip install merlin-vlm
