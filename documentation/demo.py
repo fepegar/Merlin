@@ -1,6 +1,7 @@
-'''
+"""
 Download Merlin and test the model on sample data that is downloaded from huggingface
-'''
+"""
+
 import os
 import warnings
 import torch
@@ -22,7 +23,9 @@ cache_dir = data_dir.replace("abct_data", "abct_data_cache")
 
 datalist = [
     {
-        "image": download_sample_data(data_dir), # function returns local path to nifti file
+        "image": download_sample_data(
+            data_dir
+        ),  # function returns local path to nifti file
         "text": "Lower thorax: A small low-attenuating fluid structure is noted in the right cardiophrenic angle in keeping with a tiny pericardial cyst."
         "Liver and biliary tree: Normal. Gallbladder: Normal. Spleen: Normal. Pancreas: Normal. Adrenal glands: Normal. "
         "Kidneys and ureters: Symmetric enhancement and excretion of the bilateral kidneys, with no striated nephrogram to suggest pyelonephritis. "
@@ -43,15 +46,12 @@ dataloader = DataLoader(
 )
 
 for batch in dataloader:
-    outputs = model(
-        batch["image"].to(device), 
-        batch["text"]
-        )
-    print(f"\n================== Output Shapes ==================")
+    outputs = model(batch["image"].to(device), batch["text"])
+    print("\n================== Output Shapes ==================")
     print(f"Contrastive image embeddings shape: {outputs[0].shape}")
     print(f"Phenotype predictions shape: {outputs[1].shape}")
     print(f"Contrastive text embeddings shape: {outputs[2].shape}")
-    
+
 ## Get the Image Embeddings
 model = Merlin(ImageEmbedding=True)
 model.eval()
@@ -59,8 +59,9 @@ model.cuda()
 
 for batch in dataloader:
     outputs = model(
-        batch["image"].to(device), 
-        )
-    print(f"\n================== Output Shapes ==================")
-    print(f"Image embeddings shape (Can be used for downstream tasks): {outputs[0].shape}")
-    
+        batch["image"].to(device),
+    )
+    print("\n================== Output Shapes ==================")
+    print(
+        f"Image embeddings shape (Can be used for downstream tasks): {outputs[0].shape}"
+    )

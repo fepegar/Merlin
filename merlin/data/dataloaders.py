@@ -10,6 +10,7 @@ from monai.data.utils import SUPPORTED_PICKLE_MOD
 
 from merlin.data.monai_transforms import ImageTransforms
 
+
 class CTPersistentDataset(monai.data.PersistentDataset):
     def __init__(self, data, transform, cache_dir=None):
         super().__init__(data=data, transform=transform, cache_dir=cache_dir)
@@ -19,7 +20,6 @@ class CTPersistentDataset(monai.data.PersistentDataset):
     def _cachecheck(self, item_transformed):
         hashfile = None
         _item_transformed = deepcopy(item_transformed)
-        image_path = item_transformed.get("image")
         image_data = {
             "image": item_transformed.get("image")
         }  # Assuming the image data is under the 'image' key
