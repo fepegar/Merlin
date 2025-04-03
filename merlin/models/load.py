@@ -1,6 +1,5 @@
 import os
 
-from huggingface_hub import hf_hub_download
 import torch
 from torch import nn
 
@@ -20,9 +19,10 @@ class Merlin(nn.Module):
         self.repo_id = "stanfordmimi/Merlin"
         self.model = self._load_model()
 
-    '''
+    """
     Load the Merlin model with the initialized weights
-    '''
+    """
+
     def _load_model(self):
         self._download_checkpoint()
         model = MerlinArchitecture(ImageEmbedding=self.ImageEmbedding)
@@ -31,9 +31,10 @@ class Merlin(nn.Module):
         )
         return model
 
-    ''' 
+    """ 
     Download the Merlin weights from the Hugging Face Hub
-    '''
+    """
+
     def _download_checkpoint(self):
         download_file(
             repo_id=self.repo_id,
