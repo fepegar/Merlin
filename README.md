@@ -1,6 +1,6 @@
 # Merlin: Vision Language Foundation Model for 3D Computed Tomography
 
-[![arXiv](https://img.shields.io/badge/arXiv-2406.06512-b31b1b.svg?style=for-the-badge)](https://arxiv.org/abs/2406.06512)&nbsp;&nbsp;&nbsp;&nbsp;[![Hugging Face](https://huggingface.co/datasets/huggingface/badges/resolve/main/model-on-hf-md.svg)](https://huggingface.co/stanfordmimi/Merlin)&nbsp;&nbsp;&nbsp;&nbsp;[![pypi](https://img.shields.io/pypi/v/merlin-vlm?style=for-the-badge)](https://pypi.org/project/merlin-vlm/)&nbsp;&nbsp;&nbsp;&nbsp;![License](https://img.shields.io/github/license/stanfordmimi/merlin?style=for-the-badge)
+[![arXiv](https://img.shields.io/badge/arXiv-2406.06512-b31b1b.svg?style=for-the-badge)](https://arxiv.org/abs/2406.06512)    [![Hugging Face](https://huggingface.co/datasets/huggingface/badges/resolve/main/model-on-hf-md.svg)](https://huggingface.co/stanfordmimi/Merlin)    [![pypi](https://img.shields.io/pypi/v/merlin-vlm?style=for-the-badge)](https://pypi.org/project/merlin-vlm/)    [![Watch the Talk on YouTube](https://img.shields.io/badge/YouTube-Talk-red?style=for-the-badge&logo=youtube)](https://youtu.be/XWmCkbpXOUw?si=6GggZgj9U4kbLAKx)    ![License](https://img.shields.io/github/license/stanfordmimi/merlin?style=for-the-badge)
 
 *Merlin is a 3D VLM for computed tomography that leverages both structured electronic health records (EHR) and unstructured radiology reports for pretraining.*
 
@@ -28,6 +28,7 @@ pip install -e .
 ## 🚀 Inference with Merlin
 
 To create a Merlin model with both image and text embeddings enabled, use the following:
+
 ```python
 from merlin import Merlin
 
@@ -35,6 +36,7 @@ model = Merlin()
 ```
 
 To initialize the model with **only image embeddings** active, use:
+
 ```python
 from merlin import Merlin
 
@@ -46,6 +48,7 @@ model = Merlin(ImageEmbedding=True)
 #### For additional information, please read the [documentation](documentation/inference.md).
 
 ## 📎 Citation
+
 If you find this repository useful for your work, please cite the cite the [original paper](https://arxiv.org/abs/2406.06512):
 
 ```bibtex
